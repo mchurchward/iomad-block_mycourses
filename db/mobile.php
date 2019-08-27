@@ -36,7 +36,7 @@ $addons = [
                 'method' => 'mobile_view_block',
                 'styles' => [
                     'url' => $CFG->wwwroot . '/blocks/mycourses/styles_app.css',
-                    'version' => '1.2'
+                    'version' => '1.7'
                 ]
             ]
         ],

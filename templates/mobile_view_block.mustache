@@ -20,7 +20,25 @@
     This template renders the main content area for the mycourses block.
 
     Example context (json):
-    {}
+    {
+        "pages": [
+            {
+                "value": "inprogress",
+                "selected": 1,
+                "label": "In progress"
+            }
+        ],
+        "pagecontent": {
+            "courses": [
+                {
+                    "url": "http://something",
+                    "image": "http://something",
+                    "fullname": "Course one",
+                    "progress": 24
+                }
+            ]
+        }
+    }
 }}
 {{=<% %>=}}
 <div>
@@ -31,43 +49,24 @@
     </ion-item-divider>
     <ion-card>
         <ion-list>
-            <ion-list-header>{{ 'plugin.block_mycourses.availableheader' | translate }}</ion-list-header>
-            <%#availableview.courses%>
+            <ion-select (ionChange)="updateContent({page: $event})" interface="popover" class="mycourseselector">
+                <%#pages%>
+                <ion-option value="<%value%>"<%#selected%> selected<%/selected%>><%label%></ion-option>
+                <%/pages%>
+            </ion-select>
+            <%#pagecontent.courses%>
             <ion-item>
                 <a ion-item href="<%url%>" core-link capture="true">
-                    <img item-start src="<% image %>" class="courseimage" />
-                    <%fullname%>
+                    <img item-start src="<% image %>" class="mycourseimage" />
+                    <%fullname%><%#progress%> <ion-badge item-end><%progress%>%</ion-badge><%/progress%>
                 </a>
             </ion-item>
-            <%/availableview.courses%>
-        </ion-list>
-    </ion-card>
-    <ion-card>
-        <ion-list>
-            <ion-list-header>{{ 'plugin.block_mycourses.inprogressheader' | translate }}</ion-list-header>
-            <%#inprogressview.courses%>
+            <%/pagecontent.courses%>
+            <%^pagecontent.courses%>
             <ion-item>
-                <a ion-item href="<%url%>" core-link capture="true">
-                    <img item-start src="<% image %>" class="courseimage" />
-                    <%fullname%>
-                    <ion-badge item-end><%progress%>%</ion-badge>
-                </a>
+                <%nocourses%>
             </ion-item>
-            <%/inprogressview.courses%>
-        </ion-list>
-    </ion-card>
-    <ion-card>
-        <ion-list>
-            <ion-list-header>{{ 'plugin.block_mycourses.completedheader' | translate }}</ion-list-header>
-            <%#completedview.courses%>
-            <ion-item>
-                <a ion-item href="<%url%>" core-link capture="true">
-                    <img item-start src="<% image %>" class="courseimage" />
-                    <%fullname%>
-                    <ion-badge item-end><%progress%>%</ion-badge>
-                </a>
-            </ion-item>
-            <%/completedview.courses%>
+            <%/pagecontent.courses%>
         </ion-list>
     </ion-card>
 </div>
